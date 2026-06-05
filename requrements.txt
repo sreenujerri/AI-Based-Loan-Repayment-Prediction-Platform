@@ -1,0 +1,94 @@
+========== how to run zenml====
+zenml up --blocking
+
+Remove-Item -Recurse -Force mlruns
+
+2️⃣ Using the ZenML CLI
+
+Run this command in your terminal:
+
+zenml pipeline-run list
+It will show a table of recent runs with columns like ID, Pipeline, Status, Started, Ended.
+Copy the ID column — that’s your YOUR_PIPELINE_RUN_ID.
+
+
+======================================================================================================
+
+from zenml.client import Client
+
+# Connect to ZenML
+client = Client()
+
+# Get your latest pipeline run
+pipeline_run = client.get_pipeline_run(run_id="your_pipeline_run_id")  # Or pipeline_response.id if just ran
+
+# Get the step that produced the DataFrame, e.g., ingest_df
+ingest_step = pipeline_run.get_step("ingest_df")
+
+# Read the output artifact (DataFrame)
+df = ingest_step.output.read()
+
+# Preview the data
+print(df.head())
+
+===============================================================
+                 Method-2
+================================================================
+from zenml.client import Client
+
+client = Client()
+pipeline_run = client.get_pipeline_run(run_id=pipeline_response.id)
+
+# Access the output of a step
+ingest_step = pipeline_run.get_step("ingest_df")
+df_artifact = ingest_step.output.read()  # ZenML artifact stores the DataFrame
+print(df_artifact.head())
+
+
+=========== MLFLOW==========
+
+zenml stack list
+zenml stack delete <stack_name>
+
+======= show list====
+zenml stack list
+zenml model-deployer list
+zenml experiment-tracker list
+
+========= how to delete=====
+zenml experiment-tracker delete loan_customer_tracker
+
+=========== how to create deployer and experiment =====
+# Register experiment tracker
+zenml experiment-tracker register customer_tracker --flavor=mlflow
+
+# Register model deployer
+zenml model-deployer register customer_deployer --flavor=mlflow
+
+zenml stack register loan_customer_stack -a default -o default -d customer_deployer -e customer_tracker --set
+
+✅ Step 1: Create custom orchestrator
+# zenml orchestrator register customer_orchestrator --flavor=local
+
+
+✅ Step 2: Create custom artifact store
+
+Most common is local artifact store:
+
+# zenml artifact-store register customer_artifact_store --flavor=local
+
+✅  After registration:
+
+zenml stack set loan_customer_stack
+
+
+
+
+
+============================ overfitting ==================
+
+“Overfitting is a machine learning problem where a model performs very well on training data 
+but poorly on unseen data because it has learned noise and specific patterns instead of generalizing the underlying relationship.
+
+It usually happens when the model is too complex, the dataset is small, or the model is trained for too long.
+Common ways to prevent overfitting include using more data, regularization techniques, cross-validation, dropout, and early stopping.”

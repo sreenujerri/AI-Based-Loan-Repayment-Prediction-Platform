@@ -1,0 +1,29 @@
+artifact_path: file:///C:/Users/sreen/OneDrive/Desktop/Zenml/mlruns/0/models/m-a6586204d12b4becb5e67ea0e4284822/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.11.1
+model_id: m-a6586204d12b4becb5e67ea0e4284822
+model_size_bytes: 29367
+model_uuid: m-a6586204d12b4becb5e67ea0e4284822
+prompts: null
+run_id: 01b1dcb650ce4e5a8830ed09f205371b
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 19]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "object", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-05-20 08:11:24.592875'
